@@ -1,0 +1,6 @@
+{
+    "name": "ArrivalGuides",
+    "description": "ArrivalGuides theme designed to fit ArrivalGuides.com websites",
+    "theme": true,
+    "stylesheet": "stylesheets/main.less"
+}

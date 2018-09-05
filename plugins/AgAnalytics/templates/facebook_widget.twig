@@ -1,0 +1,46 @@
+<div id="visitsTotal">
+    <table class="dataTable" cellspacing="0">
+        <thead>
+        <tr>
+            <th id="label" class="sortable label first" style="cursor: auto;">
+                <div id="thDIV">{{ 'Campaign ID' }}</div>
+            </th>
+            <th id="label" class="sortable label" style="cursor: auto;">
+                <div id="thDIV">{{ 'Campaign Name' }}</div>
+            </th>
+            <th id="label" class="sortable label" style="cursor: auto;">
+                <div id="thDIV">{{ 'Impressions' }}</div>
+            </th>
+            <th id="label" class="sortable label" style="cursor: auto;">
+                <div id="thDIV">{{ 'Clicks' }}</div>
+            </th>
+            <th id="label" class="sortable label" style="cursor: auto;">
+                <div id="thDIV">{{ 'CTC' }}</div>
+            </th>
+            <th id="label" class="sortable label" style="cursor: auto;">
+                <div id="thDIV">{{ 'CPM' }}</div>
+            </th>
+            <th id="label" class="sortable label" style="cursor: auto;">
+                <div id="thDIV">{{ 'CPP' }}</div>
+            </th>
+            <th id="label" class="sortable label" style="cursor: auto;">
+                <div id="thDIV">{{ 'CTR' }}</div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in rows %}
+        <tr class="">
+            <td class="label column">{{ row.campaign_id|raw }}</td>
+            <td class="column">{{ row.campaign_name|raw }}</td>
+            <td class="column">{{ row.impressions|raw }}</td>
+            <td class="column">{{ row.clicks|number }}</td>
+            <td class="column">{{ row.cpc|raw }}</td>
+            <td class="column">{{ row.cpm|raw }}</td>
+            <td class="column">{{ row.cpp|raw }}</td>
+            <td class="column">{{ row.ctr|raw }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

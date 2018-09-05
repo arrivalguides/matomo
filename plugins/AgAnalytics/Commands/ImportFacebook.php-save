@@ -1,0 +1,258 @@
+<?php
+/**
+ * Piwik - free/libre analytics platform
+ *
+ * @link http://piwik.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ *
+ */
+
+namespace Piwik\Plugins\AgAnalytics\Commands;
+
+use Piwik\Access;
+use Piwik\Piwik;
+use Piwik\Plugin\ConsoleCommand;
+// use Piwik\Plugins\VisitorGenerator\Generator\Websites;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+use Facebook\Facebook;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
+
+use FacebookAds\Object\AdUser;
+use FacebookAds\Object\AdAccount;
+use FacebookAds\Object\Fields\AdSetFields;
+use FacebookAds\Object\Fields\UserFields;
+use FacebookAds\Object\Fields\AdAccountFields;
+use FacebookAds\Object\Values\InsightsPresets;
+use FacebookAds\Api;
+use FacebookAds\Object\AdReportRun;
+use FacebookAds\Object\Campaign;
+use FacebookAds\Object\Values\AdsInsightsLevelValues;
+use FacebookAds\Object\Values\AdsInsightsDatePresetValues;
+use FacebookAds\Object\Fields\AdsInsightsFields;
+use FacebookAds\Object\AdsInsights;
+
+use FacebookAds\Object\Fields\CampaignFields;
+
+
+class ImportFacebook extends ConsoleCommand
+{
+
+    const app_id = '238786920023198';
+    const app_secret = '9a00e2c2679c35d25249dbd0fc4d4e11'; 
+//     const access_token = 
+//     'EAADZALOmLhJ4BAO2OwTEFGXc31ILNOnLAmKUZCk34Q3MCAN9xqCLLPVV8l7NF8KVH7RmZCCCYq5eveS1ajpTSHTL4AjWgRgRfIqhheclAw7KrN98lWV7uMIAIr6NQ1FILeliI4R4veV7jD19ur4nKyDKqPeb5evMABJy6KS1jZCpHykaI8p5Ylec2YkJ8ZAMZD';
+    
+    const access_token = 
+    'EAADZALOmLhJ4BAEQaSXX35JIxleK6PGp1isEBx6o37qgVDFcHN7WdFG5LD6yKZAQK5SfGDjq9swgwlGabWEJIUNZCb8MPWdxLKjV2KMgyUKKk8R2OacZBp2Mn2s5eU0ulTVm8R4FAcPdjUJ1dyK0PSly1VXutA1HEsxyPipxEz1ja6nv8GAC6n8WJUdl6LAZD';
+    
+    const ad_id = 'act_171951759892573';
+    
+    private $fb;
+    
+    
+    protected function configure()
+    {
+        $this->setName('aganalytics:import-facebook');
+        $this->setDescription('Import facebook metrics data. This command is intended for developers.');
+        $this->addOption('limit', null, InputOption::VALUE_REQUIRED, 'Defines how many websites should be generated', 10);
+        
+        // Initialize a new Session and instantiate an API object
+        Api::init(
+            self::app_id, // App ID
+            self::app_secret,
+            self::access_token // Your user access token
+        );
+        
+//         $this->fb = new Facebook([
+//             'app_id' => self::app_id,
+//             'app_secret' => self::app_secret,
+//             'default_graph_version' => 'v2.12',
+//         ]);
+        
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+    
+
+    
+//         $response = $this->query('/' . self::ad_id . '/adimages');
+//   
+//         $graphEdge = $response->getGraphEdge();
+//  
+//     
+//     echo count($graphEdge);
+//     echo "\n\n";
+//        foreach ($graphEdge as $node) {
+//                 echo print_r($node, true);
+//         }
+//     
+//         exit;
+    
+    
+            $account = new AdAccount(self::ad_id);
+            
+            
+/*            
+            $params = array(
+    'date_preset'=>'last_28_days',
+    'data_columns'=>"['adgroup_id','actions','spend']",
+);
+
+$stats = $account->getReportsStats(null, $params);
+
+foreach($stats as $stat) {
+    echo $stat->impressions;
+    echo $stat->actions;
+}
+
+
+exit;*/
+
+/*
+            
+curl -G \
+-d "fields=id,name,status,insights{impressions}" \
+-d "access_token=EAADZALOmLhJ4BAEQaSXX35JIxleK6PGp1isEBx6o37qgVDFcHN7WdFG5LD6yKZAQK5SfGDjq9swgwlGabWEJIUNZCb8MPWdxLKjV2KMgyUKKk8R2OacZBp2Mn2s5eU0ulTVm8R4FAcPdjUJ1dyK0PSly1VXutA1HEsxyPipxEz1ja6nv8GAC6n8WJUdl6LAZD" \
+"https://graph.facebook.com/v2.11/23842785804650536"
+
+
+curl -G \
+-d "fields=impressions,spend" \
+-d "access_token=EAADZALOmLhJ4BAEQaSXX35JIxleK6PGp1isEBx6o37qgVDFcHN7WdFG5LD6yKZAQK5SfGDjq9swgwlGabWEJIUNZCb8MPWdxLKjV2KMgyUKKk8R2OacZBp2Mn2s5eU0ulTVm8R4FAcPdjUJ1dyK0PSly1VXutA1HEsxyPipxEz1ja6nv8GAC6n8WJUdl6LAZD" \
+"https://graph.facebook.com/v2.11/23842785804650536/insights"
+
+
+curl -G \
+-d "access_token=EAADZALOmLhJ4BAEQaSXX35JIxleK6PGp1isEBx6o37qgVDFcHN7WdFG5LD6yKZAQK5SfGDjq9swgwlGabWEJIUNZCb8MPWdxLKjV2KMgyUKKk8R2OacZBp2Mn2s5eU0ulTVm8R4FAcPdjUJ1dyK0PSly1VXutA1HEsxyPipxEz1ja6nv8GAC6n8WJUdl6LAZD" \
+"https://graph.facebook.com/v2.11/23842785804650536/insights"
+            
+*/
+
+
+
+//     $cursor = $account->getCampaigns(array(
+//         CampaignFields::NAME
+//     ));
+// 
+// 
+//     $params = array(
+//                 'date_preset' => AdsInsightsDatePresetValues::LAST_7D,
+// //                  'level' => AdsInsightsLevelValues::CAMPAIGN
+//     );
+//             
+//     // Loop over objects
+//     foreach ($cursor as $campaign) {
+//         echo $campaign->{CampaignFields::NAME}.PHP_EOL;
+//         $insights = $campaign->getInsights(array('impressions', 'spend'), $params);
+//             foreach ($insights as $insight) {
+//                 echo $insight->{'impressions'}.PHP_EOL;
+//             }
+//     }
+
+
+
+$adsets = $account->getAdSets(array(
+  AdSetFields::ID,
+  AdSetFields::NAME,
+  AdSetFields::CAMPAIGN,
+  AdSetFields::CAMPAIGN_ID,
+  AdSetFields::OPTIMIZATION_GOAL,
+  AdSetFields::BILLING_EVENT,
+  AdSetFields::BID_AMOUNT,
+  AdSetFields::DAILY_BUDGET,
+  AdSetFields::CONFIGURED_STATUS,
+  AdSetFields::EFFECTIVE_STATUS,
+  AdSetFields::TARGETING
+));
+
+
+        $i = 1;
+        foreach ($adsets as $adset) {
+            echo $i . ') ' .  $adset->{AdSetFields::ID} . ' ' . $adset->{AdSetFields::NAME} . ' compaign: ' . $adset->{AdSetFields::CAMPAIGN_ID} . "\n";
+            $i++;
+
+    
+            $fields =  AdsInsights::getFieldsEnum()->getValues();
+            $insights = $adset->getInsights($fields, array(
+                'date_preset' => AdsInsightsDatePresetValues::LAST_7D
+            ));
+            
+             foreach ($insights as $insight) {
+                foreach($fields as $field) {
+                    if(is_array($insight->{$field})) {
+                            echo json_encode($insight->{$field}).PHP_EOL;
+                    } else {
+                            echo $field . ': ' . $insight->{$field}.PHP_EOL;
+                    }
+                }
+            }
+            
+            echo "\n\n\n";
+        
+            if(!empty($adset->{AdSetFields::CAMPAIGN_ID})) {
+                $params = array(
+                    'date_preset' => AdsInsightsDatePresetValues::LAST_7D,
+                    'level' => AdsInsightsLevelValues::CAMPAIGN
+                );
+        
+                $campaign = new Campaign($adset->{AdSetFields::CAMPAIGN_ID});
+                $insights = $campaign->getInsights($fields, $params);
+                foreach ($insights as $insight) {
+                    foreach($fields as $field) {
+                        if(is_array($insight->{$field})) {
+                                echo json_encode($insight->{$field}).PHP_EOL;
+                        } else {
+                                echo $field . ': ' . $insight->{$field}.PHP_EOL;
+                        }
+                    }
+                }
+            }
+            
+            echo "\n\n\n";
+ 
+        }
+
+
+    echo "Total: " . count($adsets) . "\n\n";
+
+
+// $account->read(array(
+//   AdAccountFields::TOS_ACCEPTED,
+// ));
+// 
+// // Dump TOS Accepted info.
+// var_dump($account->{AdAccountFields::TOS_ACCEPTED});
+    
+        
+//         $me = new AdUser('me');
+//         $my_adaccount = $me->getAdAccounts()->current();
+//         
+//         $this->writeSuccessMessage($output, array(
+//             sprintf('%s', print_r($my_adaccount->getData(), true))
+//         ));
+        
+        
+        
+    }
+    
+    private function query($str) {
+        try {
+            $response = $this->fb->get($str, self::access_token);
+        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+        
+        return $response;
+    } 
+
+}

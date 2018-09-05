@@ -457,33 +457,33 @@ scheduled_reports_truncate = 23
 
 ; during archiving, Matomo will limit the number of results recorded, for performance reasons
 ; maximum number of rows for any of the Referrers tables (keywords, search engines, campaigns, etc.)
-datatable_archiving_maximum_rows_referrers = 1000
+datatable_archiving_maximum_rows_referrers = 10000
 ; maximum number of rows for any of the Referrers subtable (search engines by keyword, keyword by campaign, etc.)
-datatable_archiving_maximum_rows_subtable_referrers = 50
+datatable_archiving_maximum_rows_subtable_referrers = 5000
 
 ; maximum number of rows for the Users report
 datatable_archiving_maximum_rows_userid_users = 50000
 
 ; maximum number of rows for the Custom Variables names report
 ; Note: if the website is Ecommerce enabled, the two values below will be automatically set to 50000
-datatable_archiving_maximum_rows_custom_variables = 1000
+datatable_archiving_maximum_rows_custom_variables = 10000
 ; maximum number of rows for the Custom Variables values reports
-datatable_archiving_maximum_rows_subtable_custom_variables = 1000
+datatable_archiving_maximum_rows_subtable_custom_variables = 10000
 
 ; maximum number of rows for any of the Actions tables (pages, downloads, outlinks)
-datatable_archiving_maximum_rows_actions = 500
+datatable_archiving_maximum_rows_actions = 5000
 ; maximum number of rows for pages in categories (sub pages, when clicking on the + for a page category)
 ; note: should not exceed the display limit in Piwik\Actions\Controller::ACTIONS_REPORT_ROWS_DISPLAY
 ; because each subdirectory doesn't have paging at the bottom, so all data should be displayed if possible.
-datatable_archiving_maximum_rows_subtable_actions = 100
+datatable_archiving_maximum_rows_subtable_actions = 1000
 
 ; maximum number of rows for any of the Events tables (Categories, Actions, Names)
-datatable_archiving_maximum_rows_events = 500
+datatable_archiving_maximum_rows_events = 5000
 ; maximum number of rows for sub-tables of the Events tables (eg. for the subtables Categories>Actions or Categories>Names).
-datatable_archiving_maximum_rows_subtable_events = 500
+datatable_archiving_maximum_rows_subtable_events = 5000
 
 ; maximum number of rows for other tables (Providers, User settings configurations)
-datatable_archiving_maximum_rows_standard = 500
+datatable_archiving_maximum_rows_standard = 5000
 
 ; maximum number of rows to fetch from the database when archiving. if set to 0, no limit is used.
 ; this can be used to speed up the archiving process, but is only useful if you're site has a large
@@ -491,7 +491,7 @@ datatable_archiving_maximum_rows_standard = 500
 archiving_ranking_query_row_limit = 50000
 
 ; maximum number of actions that is shown in the visitor log for each visitor
-visitor_log_maximum_actions_per_visit = 500
+visitor_log_maximum_actions_per_visit = 5000
 
 ; by default, the real time Live! widget will update every 5 seconds and refresh with new visits/actions/etc.
 ; you can change the timeout so the widget refreshes more often, or not as frequently
@@ -915,7 +915,6 @@ Plugins[] = SegmentEditor
 Plugins[] = Insights
 Plugins[] = Morpheus
 Plugins[] = Contents
-Plugins[] = TestRunner
 Plugins[] = BulkTracking
 Plugins[] = Resolution
 Plugins[] = DevicePlugins

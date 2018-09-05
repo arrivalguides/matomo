@@ -1,0 +1,17 @@
+{
+    "name": "AG Analytics",
+    "version": "1.0.0",
+    "description": "Arrival Guides analytics plugin for integration with social networks metrics",
+    "theme": false,
+    "require": {
+       "piwik": ">=3.0.0-b1,<4.0.0-b1"
+    },
+    "stylesheet": "stylesheets/theme.less",
+    "authors": [
+        {
+            "name": "ArrivalGuides AB",
+            "email": "support@arrivalguides.com",
+            "homepage": "http://arrivalguides.com"
+        }
+    ]
+}
