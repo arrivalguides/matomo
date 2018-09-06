@@ -291,7 +291,7 @@ if(isset($_GET['idsite']) && $_GET['idsite'] == 1){
     }
 
 // 10)
-    if(count($parts) == 9 && $parts[2] == "new.arrivalguides.com" && $parts[4] == "Travelguides" && isset($parts[7])){
+    if(empty($SITE_NAME)  && count($parts) == 9 && $parts[2] == "new.arrivalguides.com" && $parts[4] == "Travelguides" && isset($parts[7])){
        $SITE_NAME = $parts[7];
        if(isset($destination[strtoupper($SITE_NAME)])){
            $_GET['idsite'] = $destination[strtoupper($SITE_NAME)];
