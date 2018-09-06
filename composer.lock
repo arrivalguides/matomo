@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "53d9ab304551df4691f2057dc8b12c99",
+    "content-hash": "05da5ce68927014bcb28eb7a66d4e79b",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -281,6 +281,72 @@
                 "caching"
             ],
             "time": "2017-07-22T12:49:21+00:00"
+        },
+        {
+            "name": "facebook/php-ads-sdk",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/facebook-php-business-sdk.git",
+                "reference": "517f0d9e1dc906c5ba2c6a487a70f401ba76465f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/facebook-php-business-sdk/zipball/517f0d9e1dc906c5ba2c6a487a70f401ba76465f",
+                "reference": "517f0d9e1dc906c5ba2c6a487a70f401ba76465f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.6",
+                "symfony/finder": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FacebookAds\\": "src/FacebookAds/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "PHP SDK for Facebook Business",
+            "homepage": "https://developers.facebook.com/",
+            "keywords": [
+                "ads",
+                "business",
+                "facebook",
+                "instagram",
+                "page",
+                "sdk"
+            ],
+            "time": "2018-08-14T20:48:49+00:00"
+        },
+        {
+            "name": "facebook/xhprof",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phacility/xhprof",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "xhprof_lib/utils/xhprof_lib.php",
+                    "xhprof_lib/utils/xhprof_runs.php"
+                ]
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "XHProf: A Hierarchical Profiler for PHP",
+            "homepage": "http://pecl.php.net/package/xhprof",
+            "keywords": [
+                "performance",
+                "profiling"
+            ],
+            "time": "2015-02-26 14:37:51"
         },
         {
             "name": "geoip2/geoip2",
@@ -1937,34 +2003,6 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
-        },
-        {
-            "name": "facebook/xhprof",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phacility/xhprof",
-                "reference": "master"
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "xhprof_lib/utils/xhprof_lib.php",
-                    "xhprof_lib/utils/xhprof_runs.php"
-                ]
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "XHProf: A Hierarchical Profiler for PHP",
-            "homepage": "http://pecl.php.net/package/xhprof",
-            "keywords": [
-                "performance",
-                "profiling"
-            ]
         },
         {
             "name": "guzzle/guzzle",
