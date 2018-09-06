@@ -42,6 +42,7 @@ php_errors.log
 /.project
 /.settings
 /*.buildpath
+*.kdev4
 /tests/javascript/unittest.dbf
 /tests/javascript/unittest2.dbf
 /tests/lib/geoip-files/*.dat*
