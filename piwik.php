@@ -252,7 +252,6 @@ if(isset($_GET['idsite']) && $_GET['idsite'] == 1){
 // 6)
     if(empty($SITE_NAME) && count($parts) == 8 && $parts[2] == "www.arrivalguides.com" && $parts[4] == "Partner" && $parts[6] == "Destination" && isset($parts[7])){
        $arr = explode("&", $parts[7]);
-file_put_contents("destinations.log", print_r($arr, true), FILE_APPEND);
        if(isset($arr[0])){
           preg_match("/^EmailDownload\?destination=(.*)/i", $arr[0], $matches);
           $SITE_NAME = (isset($matches[1])) ? $matches[1] : "";
